@@ -22,14 +22,10 @@ app.get('/', (req, res) => {
 
 
 //Connect to DB
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
-    console.log("Database Connected");
-});
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true},() => console.log("Database connection established"));
 
 
 //Start Sever
-app.listen(3000, function (){
-    console.log("Server is running on port 3000");
-});
+app.listen(3000,()=> console.log("Server running on PORT 3000...."))
 
 

@@ -108,6 +108,19 @@ router.post("/joinclass", async (req, res) => {
    }
 })
 
+router.post("/deleteClass",async (req,res)=>{
+    try{
+        const {code} = req.body //pull class code from request body
+        const _class = await _Class.findOne({code}) // get the desired class to delete
+        await User.updateOne({email:_class.owner},{$pull:{classOwnerShip:{$in:[code]}}}) //remove ownership
+        await User.updateMany({email:{$in:_class.members}},{$pull:{classParticipated:{$in:[code]}}},{multi:true}) //remove current memebers
+        await _Class.deleteOne({code}) //delete class
+        res.send("success")
+    }catch(err){
+        res.send("error")   
+    }
+})
+
 //Get Data for sign up
 router.post("/signUp", async (req , res ) => {
     try{
